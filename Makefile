@@ -53,3 +53,12 @@ pypi_test:
 
 pypi:
 	@twine upload dist/* -u $(PYPI_USERNAME)
+
+
+
+# -----------------------------------
+#            SERVER
+# -----------------------------------
+
+run_webserver_locally:
+	uvicorn api.api:app --reload
