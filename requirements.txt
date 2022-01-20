@@ -23,6 +23,11 @@ wheel>=0.29
 #s3fs
 fastapi
 uvicorn
+requests
+
+# GEO
+shapely
+ujson
 
 
 # utilities

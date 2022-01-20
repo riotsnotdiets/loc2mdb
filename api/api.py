@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+
 #from crypto_prediction.utils import reshape_data_for_prediction, reshape_predicted_data, get_prediction
 #from crypto_prediction.gcp import download_model, download_prediction_data
 #from crypto_prediction.data import prediction_ready_df, coin_history, coin_history_gbq
