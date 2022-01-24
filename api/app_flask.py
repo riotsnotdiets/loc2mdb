@@ -30,11 +30,11 @@ def index():
 
 @app.route("/loc2mdb/adresse/<string:adresse>")
 def loc2mdb(adresse):
-    debug = False
+    debug = True
     ret = coordinates_by_address(adresse)
     if 'error' in ret:
         if debug:
-            return ret['error_msg_debug']
+            return {'error_debug':ret['error_msg_debug']}
         else:
             return {'error':'Adresse wahrscheinlich fehlerhaft'}
     else:
