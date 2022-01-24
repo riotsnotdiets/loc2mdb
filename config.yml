@@ -19,3 +19,6 @@ BORDERS_GERMANY:
   LAT_MAX: 55.1
   # long 5.8 - 15.1 west ost
   # lat 55.1 - 47.3 nord-süd
+
+# Debugging
+DEBUG: False

@@ -20,11 +20,12 @@ def coordinates_by_address(adresse):
     mapbox_types = Config.get('MAPBOX_TYPES')
     mapbox_country = Config.get('MAPBOX_COUNTRY')
     mapbox_language = Config.get('MAPBOX_LANGUAGE')
-    env_path = find_dotenv()  # automatic find
-    load_dotenv(env_path)
+    #env_path = find_dotenv()  # automatic find, does NOT work on python anywhere
+    #load_dotenv(env_path)
+    load_dotenv(os.path.join(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0], '.env'))  # works on PA
     mapbox_token = os.getenv('MAPBOX_TOKEN')
     if not mapbox_token:
-        return {'error': True, 'error_msg_debug': 'mapbox_token is empty, did you setup the .env?'}
+        return {'error': True, 'error_msg_debug': 'mapbox_token is empty, did you set up the .env?'}
 
     url = f'https://api.mapbox.com/geocoding/v5/mapbox.places/{address}.json?country={mapbox_country}&types={mapbox_types}&language={mapbox_language}&access_token={mapbox_token}'
 

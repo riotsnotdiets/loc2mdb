@@ -30,7 +30,7 @@ def index():
 
 @app.route("/loc2mdb/adresse/<string:adresse>")
 def loc2mdb(adresse):
-    debug = True
+    debug = Config.get('DEBUG')
     ret = coordinates_by_address(adresse)
     if 'error' in ret:
         if debug:
@@ -65,8 +65,8 @@ def loc2mdb(adresse):
 #if __name__ == '__main__':
 
     #app.run()
-    # adresse = 'hobrechtstr. 73, 12047 berlin'
-    # x = loc2mdb(adresse)
-    # print(x)
+    #adresse = 'hobrechtstr. 73, 12047 berlin'
+    #x = loc2mdb(adresse)
+    #print(x)
 
 
