@@ -1,0 +1,21 @@
+# Mapbox
+MAPBOX_COUNTRY: DE
+MAPBOX_LANGUAGE: de
+MAPBOX_TYPES: address
+#MAPBOX_TOKEN: <in .env>
+
+# Bundestagswahl, Wahlperioden
+JAHR_BTW: 2021                # sollte per Hand geändert werden oder default auf die letzte BTW
+BUNDESTAGSWAHL:
+  2021:
+    WAHLKREISE_GEOJSON_FILE: Geometrie_Wahlkreise_20DBT_geo.geojson
+    PARLIAMENT_PERIOD: 132    # BTW 2021 gilt als Wahlperiode 132
+
+# Grenzen
+BORDERS_GERMANY:
+  LON_MIN: 5.8
+  LON_MAX: 15.1
+  LAT_MIN: 47.3
+  LAT_MAX: 55.1
+  # long 5.8 - 15.1 west ost
+  # lat 55.1 - 47.3 nord-süd

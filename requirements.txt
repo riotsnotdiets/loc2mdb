@@ -24,11 +24,14 @@ wheel>=0.29
 fastapi
 uvicorn
 requests
+pyyaml
 
 # GEO
 shapely
 ujson
 
+# Deployment
+python-dotenv
 
 # utilities
 #six>=1.14
