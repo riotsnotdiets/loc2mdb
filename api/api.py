@@ -63,7 +63,7 @@ def loc2mdb(adresse):
 
 
 @app.post("/loc2mdb/update_server")
-def loc2mdb():
+def webhook():
     # only allows POST-requests
     repo = git.Repo('path/to/git_repo')
     origin = repo.remotes.origin
@@ -71,9 +71,9 @@ def loc2mdb():
     return 'Updated PythonAnywhere successfully'
 
 if __name__ == '__main__':
-    pass
-    # adresse = 'hobrechtstr. 73, 12047 berlin'
-    # x = loc2mdb(adresse)
-    # print(x)
+    #pass
+    adresse = 'hobrechtstr. 73, 12047 berlin'
+    x = loc2mdb(adresse)
+    print(x)
 
 
