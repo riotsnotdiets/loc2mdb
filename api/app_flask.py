@@ -62,9 +62,9 @@ def loc2mdb(adresse):
 #     origin.pull()
 #     return 'Updated PythonAnywhere successfully'
 
-if __name__ == '__main__':
-    #pass
-    app.run()
+#if __name__ == '__main__':
+
+    #app.run()
     # adresse = 'hobrechtstr. 73, 12047 berlin'
     # x = loc2mdb(adresse)
     # print(x)
