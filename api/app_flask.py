@@ -1,4 +1,6 @@
 from flask import Flask
+from flask_cors import CORS, cross_origin
+
 import ujson as json  # https://stackoverflow.com/questions/18517949/what-is-faster-loading-a-pickled-dictionary-object-or-loading-a-json-file-to
 
 import os
@@ -10,6 +12,7 @@ from pprint import pprint
 import git
 
 app = Flask(__name__)
+#CORS(app)
 
 # paths
 root_dir = os.path.dirname(os.path.dirname(__file__))
@@ -24,11 +27,13 @@ with open(f'{json_path}{filename_json}') as f:
 
 
 @app.route("/")
+@cross_origin()
 def index():
     return {"checking": "basic api works"}
 
 
 @app.route("/loc2mdb/adresse/<string:adresse>")
+@cross_origin()
 def loc2mdb(adresse):
     debug = Config.get('DEBUG')
     ret = coordinates_by_address(adresse)

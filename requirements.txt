@@ -26,6 +26,7 @@ wheel>=0.29
 requests
 pyyaml
 Flask
+flask-cors
 
 # GEO
 shapely
