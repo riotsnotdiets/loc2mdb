@@ -35,9 +35,12 @@ def coordinates_by_address(adresse):
         # check if request has payload
         data = response.json()
         if data:
-            coordinates = {'lon': data['features'][0]['center'][0], 'lat': data['features'][0]['center'][1]}
+            if data['features']:
+                coordinates = {'lon': data['features'][0]['center'][0], 'lat': data['features'][0]['center'][1]}
+            else:
+                return {'error': True, 'error_msg_debug': 'response from mapbox has no payload/coordinates'}
         else:
-            return {'error': True, 'error_msg_debug': 'response from mapbox has no payload'}
+            return {'error': True, 'error_msg_debug': 'response from mapbox has no payload/at all'}
 
     return {'coordinates':coordinates, 'address': address}
 

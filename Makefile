@@ -60,5 +60,5 @@ pypi:
 #            SERVER
 # -----------------------------------
 
-run_webserver_locally:
+run_webserver_fastapi:
 	uvicorn api.api:app --reload

@@ -21,10 +21,11 @@ wheel>=0.29
 #google-cloud-storage
 #mlflow
 #s3fs
-fastapi
-uvicorn
+#fastapi
+#uvicorn
 requests
 pyyaml
+Flask
 
 # GEO
 shapely
