@@ -1,4 +1,4 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 import ujson as json  # https://stackoverflow.com/questions/18517949/what-is-faster-loading-a-pickled-dictionary-object-or-loading-a-json-file-to
 
@@ -9,6 +9,8 @@ from loc2mdb.apis import constituency_by_wahlkreis_nr, mandates_by_constituency_
 from loc2mdb.geo import coordinates_by_address, wahlkreis_by_coordinates
 from loc2mdb.utils import pimp_data_for_return
 from pprint import pprint
+
+import git
 
 app = FastAPI()
 app.add_middleware(
@@ -35,6 +37,7 @@ with open(f'{json_path}{filename_json}') as f:
 def index():
     return {"checking": "basic api works"}
 
+
 @app.get("/loc2mdb")
 def loc2mdb(adresse):
     debug = True
@@ -59,10 +62,18 @@ def loc2mdb(adresse):
     return ret
 
 
+@app.post("/loc2mdb/update_server")
+def loc2mdb():
+    # only allows POST-requests
+    repo = git.Repo('path/to/git_repo')
+    origin = repo.remotes.origin
+    origin.pull()
+    return 'Updated PythonAnywhere successfully'
+
 if __name__ == '__main__':
-    adresse = 'hobrechtstr. 73, 12047 berlin'
-    #adresse = 'bahnhofstraße 21, 99195 großrudestedt'
-    x = loc2mdb(adresse)
-    print(x)
+    pass
+    # adresse = 'hobrechtstr. 73, 12047 berlin'
+    # x = loc2mdb(adresse)
+    # print(x)
 
 

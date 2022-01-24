@@ -32,6 +32,7 @@ ujson
 
 # Deployment
 python-dotenv
+GitPython
 
 # utilities
 #six>=1.14
