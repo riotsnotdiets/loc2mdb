@@ -2,6 +2,8 @@ import requests
 import re
 from loc2mdb.config import Config
 
+from pprint import pprint
+
 def constituency_by_wahlkreis_nr(jahr_btw, wahlkreis_nr):
     # remove everything but numbers and int it
     wahlkreis_nr = int(re.sub("[^0-9]", "", str(wahlkreis_nr)))
@@ -39,6 +41,23 @@ def mandates_by_constituency_id(constituency_id):
         data = response.json()
         if data['meta']:
             if data['meta']['status'] == 'ok' and data['meta']['result']['count'] >= 1:
+                # add vorname and nachname for the bundestags-liste if politician has no mdbid
+                # to distinguish between anette widmann-mauz, hans peter sonstwas, hans-peter sonstwas etc.
+                for i, dat in enumerate(data['data']):
+                    api_url = dat['politician']['api_url']
+                    vorname = ''
+                    nachname = ''
+                    if api_url:
+                        response2 = requests.get(api_url)
+                        if response2.status_code != 200:
+                            return {'error': True, 'error_msg_debug': 'requesting from abgeordnetenwatch/politicians (to get vorname and nachname) yielded html status code ' + str(response2.status_code)}
+                        else:
+                            data2 = response2.json()
+                            vorname = data2['data']['first_name']
+                            nachname = data2['data']['last_name']
+                    data['data'][i]['politician']['vorname'] = vorname
+                    data['data'][i]['politician']['nachname'] = nachname
+
                 return data['data']
             else:
                 return {'error': True, 'error_msg_debug': 'payload from abgeordnetenwatch/candidacies-mandates is either empty or the count is too big'}

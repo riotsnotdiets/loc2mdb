@@ -33,7 +33,7 @@ def index():
 
 
 @app.route("/loc2mdb/adresse/<string:adresse>")
-@cross_origin()
+#@cross_origin()
 def loc2mdb(adresse):
     debug = Config.get('DEBUG')
     ret = coordinates_by_address(adresse)
@@ -53,7 +53,6 @@ def loc2mdb(adresse):
     constituency_id = constituency['data'][0]['id']
     # print(constituency_id)
     mandates = mandates_by_constituency_id(constituency_id)
-
     ret = pimp_data_for_return(address, coordinates, wahlkreis, constituency['data'], mandates)
 
     return ret
@@ -67,11 +66,11 @@ def loc2mdb(adresse):
 #     origin.pull()
 #     return 'Updated PythonAnywhere successfully'
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
 
     #app.run()
-    #adresse = 'hobrechtstr. 73, 12047 berlin'
-    #x = loc2mdb(adresse)
+    adresse = 'Burgsteige 11, 72070 Tübingen'
+    x = loc2mdb(adresse)
     #print(x)
 
 
