@@ -36,6 +36,9 @@ ujson
 python-dotenv
 GitPython
 
+# Database
+SQLAlchemy
+
 # utilities
 #six>=1.14
 #joblib

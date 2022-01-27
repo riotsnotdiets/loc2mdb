@@ -21,4 +21,7 @@ BORDERS_GERMANY:
   # lat 55.1 - 47.3 nord-süd
 
 # Debugging
-DEBUG: False
+DEBUG: True
+
+# Database
+SQLITE_FILE_NAME: loc2mdb.sqlite

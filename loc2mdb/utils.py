@@ -13,12 +13,11 @@ def pimp_data_for_return(address, coordinates, wahlkreis, constituency, mandates
     ret['wahlkreis']['label'] = constituency[0]['label']
     ret['mdbs'] = []
     for mandate in mandates:
-        pprint(mandate)
         m = {}
         m['mensch_id_abgwatch'] = mandate['politician']['id']
         m['mensch_name'] = mandate['politician']['label']
-        m['mensch_vorname'] = mandate['politician']['first_name']
-        m['mensch_nachname'] = mandate['politician']['last_name']
+        m['mensch_vorname'] = mandate['politician']['vorname']
+        m['mensch_nachname'] = mandate['politician']['nachname']
 
         m['mensch_abgwatch_api'] = mandate['politician']['api_url']
         m['mensch_abgwatch_url'] = mandate['politician']['abgeordnetenwatch_url']
