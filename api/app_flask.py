@@ -47,11 +47,15 @@ def loc2mdb(adresse):
         address = ret['address']
 
     wahlkreis = wahlkreis_by_coordinates(coordinates, wahlkreise_json)
-    # print(wahlkreis)
+
     constituency = constituency_by_wahlkreis_nr(jahr_btw, wahlkreis['WKR_NR'])
+
+    quit()
     # print(constituency['data'])
+
     constituency_id = constituency['data'][0]['id']
     # print(constituency_id)
+
     mandates = mandates_by_constituency_id(constituency_id)
     ret = pimp_data_for_return(address, coordinates, wahlkreis, constituency['data'], mandates)
     return ret
@@ -65,11 +69,12 @@ def loc2mdb(adresse):
 #     origin.pull()
 #     return 'Updated PythonAnywhere successfully'
 
-#if __name__ == '__main__':
+if __name__ == '__main__':
 
     #app.run()
-    #adresse = 'Burgsteige 11, 72070 Tübingen'
-    #x = loc2mdb(adresse)
-    #pprint(x)
+    adresse = 'Burgsteige 11, 72070 Tübingen'
+    # adresse = '28203 bremen'  # funny error
+    x = loc2mdb(adresse)
+    pprint(x)
 
 

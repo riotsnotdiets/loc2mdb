@@ -8,16 +8,17 @@ def constituency_by_wahlkreis_nr(jahr_btw, wahlkreis_nr):
     # remove everything but numbers and int it
     wahlkreis_nr = int(re.sub("[^0-9]", "", str(wahlkreis_nr)))
     if wahlkreis_nr <= 0:
-        return {'error': True, 'error_msg_debug': 'wahlkreis_nr has to be positive'}
+        return {'error': True, 'error_msg_debug': 'wahlkreis_nr has to be a positive number'}
 
     if wahlkreis_nr==100000: # todo: in db ..
         pass
     else:
+        # translate the year of the BTW to the number of the parliament_period (every election on any level raises the period)
         parliament_period = Config.get('BUNDESTAGSWAHL')[jahr_btw]['PARLIAMENT_PERIOD']
         url = f'https://www.abgeordnetenwatch.de/api/v2/constituencies?parliament_period={parliament_period}&number={wahlkreis_nr}'
         response = requests.get(url)
         if response.status_code != 200:
-            return {'error': True, 'error_msg_debug': 'requesting from abgeordnetenwatch yielded html status code '+str(response.status_code)}
+            return {'error': True, 'error_msg_debug': 'requesting from abgeordnetenwatch/parliament_period yielded html status code '+str(response.status_code)}
         else:
             # check if request has payload
             data = response.json()
@@ -27,7 +28,7 @@ def constituency_by_wahlkreis_nr(jahr_btw, wahlkreis_nr):
                 else:
                     return {'error': True, 'error_msg_debug': 'payload from abgeordnetenwatch is either empty or the count is too big'}
             else:
-                return {'error': True, 'error_msg_debug': 'response from abgeordnetenwatch has no metadata'}
+                return {'error': True, 'error_msg_debug': 'response from abgeordnetenwatch has no metadata and likely failed'}
 
 
 def mandates_by_constituency_id(constituency_id):
