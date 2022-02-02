@@ -1,54 +1,47 @@
 from loc2mdb.config import Config
 import os
 import sqlite3
-from sqlalchemy import create_engine, Column, Integer, String, DateTime
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
-file = os.path.join(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0], 'loc2mdb','data', Config.get('SQLITE_FILE_NAME'))
-debug = Config.get('DEBUG')
+from flask_sqlalchemy import SQLAlchemy  # let all the session-stuff in their hands
 
-# connect to the engine, doesnt care if file exists
-if debug:
-    engine = create_engine(f'sqlite:///{file}', echo=True)  # log all commands
-else:
-    engine = create_engine(f'sqlite:///{file}', echo=False)
+db_file = 'sqlite:///' + os.path.join(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0], 'loc2mdb','data', Config.get('SQLITE_FILE_NAME'))
 
-# we can now construct a Session() without needing to pass the engine each time
-Session = sessionmaker(engine, future=True)  # https://docs.sqlalchemy.org/en/14/orm/session_basics.html#querying-2-0-style
+app.config["SQLALCHEMY_DATABASE_URI"] = db_file
+db = SQLAlchemy(app)
 
-class Person(Base):
+
+
+class Person(db.Model):
     __tablename__ = 'persons'
-    id = Column(Integer, primary_key=True)
-    einzug_ueber = Column(String)
-    abgwatch_api = Column(String)
-    abgwatch_url = Column(String)
-    abgwatch_id = Column(String)
-    vorname = Column(String)
-    nachname = Column(String)
-    partei_fraktion = Column(String)
-    partei_name = Column(String)
-    last_update = Column(DateTime(timezone=True))
+    id = db.Column(db.Integer, primary_key=True)
+    einzug_ueber = db.Column(db.String)
+    abgwatch_api = db.Column(db.String)
+    abgwatch_url = db.Column(db.String)
+    abgwatch_id = db.Column(db.String)
+    vorname = db.Column(db.String)
+    nachname = db.Column(db.String)
+    partei_fraktion = db.Column(db.String)
+    partei_name = db.Column(db.String)
+    last_update = db.Column(db.DateTime(timezone=True))
 
     def __repr__(self):
         return f'Person {self.vorname} {self.nachname}'
 
 
-class Constituency(Base):
+class Constituency(db.Model):
     __tablename__ = 'constituencies'
-    id = Column(Integer, primary_key=True, autoincrement=False)
-    wahlkreis_id = Column(Integer)
-    jahr = Column(Integer)
-    label = Column(String)
-    name = Column(String)
-    abgwatch_api = Column(String)
+    id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    wahlkreis_id = db.Column(db.Integer)
+    jahr = db.Column(db.Integer)
+    label = db.Column(db.String)
+    name = db.Column(db.String)
+    abgwatch_api = db.Column(db.String)
 
 
-class Id(Base):
+class Id(db.Model):
     __tablename__ = 'ids'
-    abgwatch_id = Column(Integer, primary_key=True, autoincrement=False)
-    mdb_id = Column(Integer)
+    abgwatch_id = db.Column(db.Integer, primary_key=True, autoincrement=False)
+    mdb_id = db.Column(db.Integer)
 
 
 def create_db():
@@ -57,6 +50,5 @@ def create_db():
     if os.path.isfile(file):
         return {'error': True, 'error_msg_debug': 'cant create db, database file already exists'}
 
-    with Session(engine) as session:
-        Base.metadata.create_all(engine, checkfirst=True)
-        session.commit()
+    db.create_all()
+

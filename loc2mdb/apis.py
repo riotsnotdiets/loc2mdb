@@ -1,8 +1,8 @@
 import requests
 import re
 from loc2mdb.config import Config
-
 from pprint import pprint
+
 
 def constituency_by_wahlkreis_nr(jahr_btw, wahlkreis_nr):
     # remove everything but numbers and int it
@@ -10,6 +10,11 @@ def constituency_by_wahlkreis_nr(jahr_btw, wahlkreis_nr):
     if wahlkreis_nr <= 0:
         return {'error': True, 'error_msg_debug': 'wahlkreis_nr has to be a positive number'}
 
+    with Session(engine) as session:
+        Base.metadata.create_all(engine, checkfirst=True)
+        session.commit()
+
+    statement = select(User).filter_by(name="ed")
     if wahlkreis_nr==100000: # todo: in db ..
         pass
     else:

@@ -37,7 +37,8 @@ python-dotenv
 GitPython
 
 # Database
-SQLAlchemy
+# SQLAlchemy
+Flask-SQLAlchemy # replaces SQLAlchemy
 
 # utilities
 #six>=1.14
