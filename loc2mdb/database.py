@@ -4,12 +4,6 @@ import sqlite3
 
 from flask_sqlalchemy import SQLAlchemy  # let all the session-stuff in their hands
 
-db_file = 'sqlite:///' + os.path.join(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0], 'loc2mdb','data', Config.get('SQLITE_FILE_NAME'))
-
-app.config["SQLALCHEMY_DATABASE_URI"] = db_file
-db = SQLAlchemy(app)
-
-
 
 class Person(db.Model):
     __tablename__ = 'persons'
@@ -44,11 +38,10 @@ class Id(db.Model):
     mdb_id = db.Column(db.Integer)
 
 
-def create_db():
+def db_create():
     # check if file exists
     file = os.path.join(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0], 'loc2mdb','data', Config.get('SQLITE_FILE_NAME'))
-    if os.path.isfile(file):
-        return {'error': True, 'error_msg_debug': 'cant create db, database file already exists'}
-
-    db.create_all()
-
+    if not os.path.isfile(file):
+        db.create_all()
+    #if os.path.isfile(file):
+        #return {'error': True, 'error_msg_debug': 'cant create db, database file already exists'}

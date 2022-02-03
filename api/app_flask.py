@@ -1,5 +1,6 @@
 from flask import Flask
 from flask_cors import CORS, cross_origin
+from flask_sqlalchemy import SQLAlchemy
 
 import ujson as json  # https://stackoverflow.com/questions/18517949/what-is-faster-loading-a-pickled-dictionary-object-or-loading-a-json-file-to
 
@@ -8,11 +9,16 @@ from loc2mdb.config import Config
 from loc2mdb.apis import constituency_by_wahlkreis_nr, mandates_by_constituency_id
 from loc2mdb.geo import coordinates_by_address, wahlkreis_by_coordinates
 from loc2mdb.utils import pimp_data_for_return
+from loc2mdb.database import *
 from pprint import pprint
 import git
 
 app = Flask(__name__)
 #CORS(app)
+db_file = 'sqlite:///' + os.path.join(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0], 'loc2mdb','data', Config.get('SQLITE_FILE_NAME'))
+app.config["SQLALCHEMY_DATABASE_URI"] = db_file
+db = SQLAlchemy(app)
+db_create()
 
 # paths
 root_dir = os.path.dirname(os.path.dirname(__file__))
