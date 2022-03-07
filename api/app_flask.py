@@ -15,6 +15,7 @@ import git
 
 app = Flask(__name__)
 #CORS(app)
+
 db_file = 'sqlite:///' + os.path.join(os.path.split(os.path.abspath(os.path.dirname(__file__)))[0], 'loc2mdb','data', Config.get('SQLITE_FILE_NAME'))
 app.config["SQLALCHEMY_DATABASE_URI"] = db_file
 db = SQLAlchemy(app)
